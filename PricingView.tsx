@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { LandingTopbar } from './common/LandingTopbar';
 import {
-  CheckCircle2, ArrowRight, Building2, Check, X, Clock
+  Sun, Moon, CheckCircle2, ArrowRight, ShieldCheck, Zap,
+  Building2, Sparkles, X, Menu, Check, HelpCircle, PhoneCall
 } from 'lucide-react';
 
 export interface PricingViewProps {
@@ -32,7 +33,6 @@ export const PricingView: React.FC<PricingViewProps> = ({
   }, []);
 
   const [billingCycle, setBillingCycle] = useState<'annual' | 'monthly'>('annual');
-  const [starterUserMode, setStarterUserMode] = useState<'single' | 'dual'>('single');
   const [mouseCoords, setMouseCoords] = useState({ x: -1000, y: -1000 });
 
   const dk = theme === 'dark';
@@ -85,32 +85,12 @@ export const PricingView: React.FC<PricingViewProps> = ({
           letter-spacing: -0.02em;
         }
 
-        .pv-pricing-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 22px;
-          margin-bottom: 70px;
-          align-items: stretch;
-        }
-        @media(max-width: 1240px) {
-          .pv-pricing-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-          }
-        }
-        @media(max-width: 680px) {
-          .pv-pricing-grid {
-            grid-template-columns: 1fr;
-            gap: 20px;
-          }
-        }
-
         .pv-price-card {
           position: relative;
           background: ${bg2};
           border: 1px solid ${bdr};
           border-radius: 20px;
-          padding: 34px 24px;
+          padding: 36px 32px;
           display: flex;
           flex-direction: column;
           justifyContent: space-between;
@@ -135,30 +115,9 @@ export const PricingView: React.FC<PricingViewProps> = ({
           border-radius: 8px;
         }
 
-        .pv-mini-tab {
-          padding: 3px 8px;
-          border-radius: 4px;
-          border: none;
-          font-size: 11px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.15s ease;
-        }
-
-        .pv-matrix-table {
-          width: 100%;
-          border-collapse: collapse;
-          font-size: 12.5px;
-        }
-        .pv-matrix-table th, .pv-matrix-table td {
-          padding: 13px 16px;
-        }
-        .pv-matrix-category {
-          background: ${dk ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'};
-          font-weight: 800;
-          font-size: 11.5px;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
+        @media(max-width:1024px){
+          .pv-nav-links{display:none !important}
+          .pv-mobile-menu-btn{display:flex !important}
         }
       `}</style>
 
@@ -195,7 +154,7 @@ export const PricingView: React.FC<PricingViewProps> = ({
         transition: 'opacity 0.25s ease'
       }} />
 
-      {/* Top Header Navbar */}
+      {/* Top Header Navbar (Shared) */}
       <LandingTopbar
         theme={theme}
         setTheme={setTheme}
@@ -219,18 +178,18 @@ export const PricingView: React.FC<PricingViewProps> = ({
         padding: 'clamp(36px, 5vh, 60px) clamp(20px, 4vw, 64px) 80px'
       }}>
         {/* Header Section */}
-        <div style={{ textAlign: 'center', marginBottom: 48 }}>
+        <div style={{ textAlign: 'center', marginBottom: 50 }}>
           <div className="pv-mono-tag" style={{ fontSize: 11.5, fontWeight: 800, color: acc, letterSpacing: '0.18em', marginBottom: 12 }}>
             TRANSPARENT ENTERPRISE PRICING
           </div>
           <h1 className="pv-serif-title" style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.15, marginBottom: 16, color: fg }}>
             Predictable Investment. <span style={{ color: acc, fontStyle: 'italic' }}>Massive Returns.</span>
           </h1>
-          <p style={{ fontSize: 'clamp(14.5px, 1.8vw, 17px)', color: fg2, maxWidth: 760, margin: '0 auto 30px', lineHeight: 1.65 }}>
-            Simple, honest pricing with statutory compliance, clear one-time onboarding charges, and dedicated industrial tiers engineered from retail counters up to composite mills.
+          <p style={{ fontSize: 'clamp(14.5px, 1.8vw, 17px)', color: fg2, maxWidth: 760, margin: '0 auto 32px', lineHeight: 1.65 }}>
+            Simple, honest pricing with zero hidden fees, zero surprise per-user charges, and guaranteed 100% Indian GST & statutory compliance.
           </p>
 
-          {/* Billing Cycle Switcher (Restyled to match original dark design) */}
+          {/* Billing Cycle Switcher */}
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             background: dk ? 'rgba(255,255,255,0.05)' : '#f1f5f9',
@@ -239,19 +198,22 @@ export const PricingView: React.FC<PricingViewProps> = ({
             <button
               onClick={() => setBillingCycle('annual')}
               style={{
-                padding: '8px 24px', borderRadius: 50, border: 'none',
+                padding: '8px 22px', borderRadius: 50, border: 'none',
                 fontSize: 13, fontWeight: 700, cursor: 'pointer',
                 background: billingCycle === 'annual' ? acc : 'transparent',
                 color: billingCycle === 'annual' ? (dk ? '#080e1a' : '#ffffff') : fg2,
-                transition: 'all 0.2s ease'
+                transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: 6
               }}
             >
-              Annual Billing
+              <span>Annual Billing</span>
+              <span style={{ fontSize: 10.5, fontWeight: 800, padding: '2px 7px', borderRadius: 50, background: billingCycle === 'annual' ? (dk ? '#080e1a' : '#ffffff') : `${acc}20`, color: billingCycle === 'annual' ? acc : acc }}>
+                SAVE 20%
+              </span>
             </button>
             <button
               onClick={() => setBillingCycle('monthly')}
               style={{
-                padding: '8px 24px', borderRadius: 50, border: 'none',
+                padding: '8px 22px', borderRadius: 50, border: 'none',
                 fontSize: 13, fontWeight: 700, cursor: 'pointer',
                 background: billingCycle === 'monthly' ? acc : 'transparent',
                 color: billingCycle === 'monthly' ? (dk ? '#080e1a' : '#ffffff') : fg2,
@@ -263,90 +225,39 @@ export const PricingView: React.FC<PricingViewProps> = ({
           </div>
         </div>
 
-        {/* ══════════════════════════════════════════════════════════════════
-            4 Balanced Pricing Tier Cards
-        ══════════════════════════════════════════════════════════════════ */}
-        <div className="pv-pricing-grid">
-          {/* ───────────────────────────────────────────────────────────────
-              Card 1: Starter ERP
-          ─────────────────────────────────────────────────────────────── */}
+        {/* 3 Pricing Tier Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 28, marginBottom: 70 }}>
+          {/* Tier 1: Starter */}
           <div className="pv-price-card">
             <div>
-              <div className="pv-mono-tag" style={{ fontSize: 10.5, fontWeight: 800, color: fg2, marginBottom: 8 }}>
-                TIER 01 · APPROVED ENTRY
+              <div className="pv-mono-tag" style={{ fontSize: 11, fontWeight: 800, color: fg2, marginBottom: 8 }}>
+                TIER 01 · STARTER MILL / TRADER
               </div>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
-                Starter ERP
+                Starter Suite
               </h3>
-              <p style={{ fontSize: 13, color: fg2, lineHeight: 1.5, margin: '0 0 18px', minHeight: 40 }}>
-                For single-location textile traders, retail counters, and small wholesale businesses.
+              <p style={{ fontSize: 13.5, color: fg2, lineHeight: 1.5, margin: '0 0 20px', minHeight: 40 }}>
+                For single-location textile traders, weaving units, and small processing houses.
               </p>
 
-              {/* Price Block */}
-              <div style={{ marginBottom: 20, borderBottom: `1px solid ${bdr}`, paddingBottom: 18, minHeight: 88 }}>
-                {billingCycle === 'annual' ? (
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                      <span style={{ fontSize: 36, fontWeight: 900, color: fg, letterSpacing: '-0.03em' }}>
-                        ₹5,999
-                      </span>
-                      <span style={{ fontSize: 13, color: fg2 }}>/ year</span>
-                    </div>
-                    <div style={{ fontSize: 11.5, color: fg2, marginTop: 4 }}>
-                      Up to 5 concurrent users · ₹5,000 one-time setup
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                      <span style={{ fontSize: 36, fontWeight: 900, color: fg, letterSpacing: '-0.03em' }}>
-                        {starterUserMode === 'single' ? '₹500' : '₹799'}
-                      </span>
-                      <span style={{ fontSize: 13, color: fg2 }}>/ month</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 6 }}>
-                      <button
-                        onClick={() => setStarterUserMode('single')}
-                        className="pv-mini-tab"
-                        style={{
-                          background: starterUserMode === 'single' ? (dk ? 'rgba(255,255,255,0.18)' : '#e2e8f0') : 'transparent',
-                          color: fg
-                        }}
-                      >
-                        1 User: ₹500/mo
-                      </button>
-                      <button
-                        onClick={() => setStarterUserMode('dual')}
-                        className="pv-mini-tab"
-                        style={{
-                          background: starterUserMode === 'dual' ? (dk ? 'rgba(255,255,255,0.18)' : '#e2e8f0') : 'transparent',
-                          color: fg
-                        }}
-                      >
-                        2 Users: ₹799/mo
-                      </button>
-                    </div>
-                  </div>
-                )}
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 24, borderBottom: `1px solid ${bdr}`, paddingBottom: 20 }}>
+                <span style={{ fontSize: 38, fontWeight: 900, color: fg, letterSpacing: '-0.03em' }}>
+                  {billingCycle === 'annual' ? '₹2,499' : '₹2,999'}
+                </span>
+                <span style={{ fontSize: 13, color: fg2 }}>/ month</span>
               </div>
 
-              {/* Setup Charge & Capacity Badge */}
-              <div style={{ fontSize: 11.5, color: fg2, marginBottom: 20 }}>
-                <span style={{ color: fg, fontWeight: 600 }}>One-Time Onboarding:</span> ₹5,000 guided setup
-              </div>
-
-              {/* Concise Feature List */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 11, marginBottom: 28 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 30 }}>
                 {[
-                  billingCycle === 'annual' ? 'Up to 5 Users Included' : (starterUserMode === 'single' ? '1 User Included' : '2 Users Included'),
-                  '1 Company · Single Branch / Counter',
+                  'Up to 5 Concurrent Users',
                   'Double-Entry Accounting & Ledger Master',
                   'Multi-Godown Stock & Inventory Valuation',
-                  'GST Invoice & E-Way Portal Data Export',
-                  'Daily Automated Local Database Backup'
+                  'Direct GST e-Invoicing & E-Way Bill',
+                  'WhatsApp Statement & Invoice Dispatch',
+                  'Standard Email & Chat Support'
                 ].map((feat, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: fg }}>
-                    <CheckCircle2 size={15} color="#10b981" style={{ flexShrink: 0, marginTop: 2 }} />
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: fg }}>
+                    <CheckCircle2 size={16} color="#10b981" style={{ flexShrink: 0, marginTop: 1 }} />
                     <span>{feat}</span>
                   </div>
                 ))}
@@ -360,193 +271,50 @@ export const PricingView: React.FC<PricingViewProps> = ({
               className="pv-pill-btn"
               style={{ width: '100%', padding: '13px', background: 'transparent', color: fg, border: `1px solid ${bdr}`, textDecoration: 'none' }}
             >
-              <span>Start 14-Day Free Trial</span>
-              <ArrowRight size={15} />
+              Start 14-Day Free Trial
             </a>
           </div>
 
-          {/* ───────────────────────────────────────────────────────────────
-              Card 2: Business ERP
-          ─────────────────────────────────────────────────────────────── */}
-          <div className="pv-price-card">
-            <div>
-              <div className="pv-mono-tag" style={{ fontSize: 10.5, fontWeight: 800, color: '#38bdf8', marginBottom: 8 }}>
-                TIER 02 · WHOLESALE & DISTRIBUTION
-              </div>
-              <h3 style={{ fontSize: 24, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
-                Business ERP
-              </h3>
-              <p style={{ fontSize: 13, color: fg2, lineHeight: 1.5, margin: '0 0 18px', minHeight: 40 }}>
-                For expanding wholesale distribution, trading firms, and multi-counter sales operations.
-              </p>
-
-              {/* Price Block */}
-              <div style={{ marginBottom: 20, borderBottom: `1px solid ${bdr}`, paddingBottom: 18, minHeight: 88 }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                  <span style={{ fontSize: 32, fontWeight: 900, color: '#38bdf8', letterSpacing: '-0.02em' }}>
-                    Custom Quote
-                  </span>
-                </div>
-                <div style={{ fontSize: 11.5, color: fg2, marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <Clock size={12} color="#38bdf8" />
-                  <span>Quotation-Based · Pricing Under Review</span>
-                </div>
-              </div>
-
-              {/* Setup Charge & Capacity Badge */}
-              <div style={{ fontSize: 11.5, color: fg2, marginBottom: 20 }}>
-                <span style={{ color: fg, fontWeight: 600 }}>One-Time Onboarding:</span> Custom quotation-based
-              </div>
-
-              {/* Concise Feature List */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 11, marginBottom: 28 }}>
-                {[
-                  'Scalable User Packages on Quotation',
-                  'Up to 3 Companies · Multi-Counter Support',
-                  '1-Click Direct GST e-Invoice & e-Way Bill API',
-                  'Automated WhatsApp PDF Invoice Dispatch',
-                  '100% Watermark-Free Document Printing',
-                  'Automated Daily Encrypted Cloud Backup'
-                ].map((feat, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: fg }}>
-                    <CheckCircle2 size={15} color="#38bdf8" style={{ flexShrink: 0, marginTop: 2 }} />
-                    <span>{feat}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <a
-              href="https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20request%20a%20quotation%20for%20the%20Business%20ERP%20plan."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pv-pill-btn"
-              style={{ width: '100%', padding: '13px', background: 'transparent', color: fg, border: `1px solid ${bdr}`, textDecoration: 'none' }}
-            >
-              <span>Request Business Quote</span>
-              <ArrowRight size={15} />
-            </a>
-          </div>
-
-          {/* ───────────────────────────────────────────────────────────────
-              Card 3: Business Pro ERP
-          ─────────────────────────────────────────────────────────────── */}
-          <div className="pv-price-card">
-            <div>
-              <div className="pv-mono-tag" style={{ fontSize: 10.5, fontWeight: 800, color: '#818cf8', marginBottom: 8 }}>
-                TIER 03 · ADVANCED OPERATIONS
-              </div>
-              <h3 style={{ fontSize: 24, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
-                Business Pro ERP
-              </h3>
-              <p style={{ fontSize: 13, color: fg2, lineHeight: 1.5, margin: '0 0 18px', minHeight: 40 }}>
-                For multi-branch enterprises requiring central sync, visual reporting, and deep audit trails.
-              </p>
-
-              {/* Price Block */}
-              <div style={{ marginBottom: 20, borderBottom: `1px solid ${bdr}`, paddingBottom: 18, minHeight: 88 }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                  <span style={{ fontSize: 32, fontWeight: 900, color: '#818cf8', letterSpacing: '-0.02em' }}>
-                    Custom Quote
-                  </span>
-                </div>
-                <div style={{ fontSize: 11.5, color: fg2, marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <Clock size={12} color="#818cf8" />
-                  <span>Quotation-Based · Enterprise Licensing</span>
-                </div>
-              </div>
-
-              {/* Setup Charge & Capacity Badge */}
-              <div style={{ fontSize: 11.5, color: fg2, marginBottom: 20 }}>
-                <span style={{ color: fg, fontWeight: 600 }}>One-Time Onboarding:</span> Custom enterprise setup
-              </div>
-
-              {/* Concise Feature List */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 11, marginBottom: 28 }}>
-                {[
-                  'Enterprise Multi-User Team Licensing',
-                  'Multi-Company Group · Multi-Branch Sync',
-                  'Drag-and-Drop Visual Report Designer',
-                  'MCA-Compliant Immutable Audit Trail',
-                  'Telegram & WhatsApp Operational Alerts',
-                  'Continuous Multi-Cloud Database Replication'
-                ].map((feat, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: fg }}>
-                    <CheckCircle2 size={15} color="#818cf8" style={{ flexShrink: 0, marginTop: 2 }} />
-                    <span>{feat}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <a
-              href="https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20request%20a%20quotation%20for%20the%20Business%20Pro%20ERP%20plan."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pv-pill-btn"
-              style={{ width: '100%', padding: '13px', background: 'transparent', color: fg, border: `1px solid ${bdr}`, textDecoration: 'none' }}
-            >
-              <span>Request Business Pro Quote</span>
-              <ArrowRight size={15} />
-            </a>
-          </div>
-
-          {/* ───────────────────────────────────────────────────────────────
-              Card 4: Textile Industry ERP (Highlighted .popular)
-          ─────────────────────────────────────────────────────────────── */}
+          {/* Tier 2: Growth (Popular) */}
           <div className="pv-price-card popular">
             <div style={{
-              position: 'absolute', top: -13, left: '50%', transform: 'translateX(-50%)',
-              background: acc, color: dk ? '#080e1a' : '#ffffff', fontSize: 10.5, fontWeight: 900,
-              padding: '3px 14px', borderRadius: 50, letterSpacing: '0.12em', boxShadow: `0 4px 14px ${acc}40`,
-              whiteSpace: 'nowrap'
+              position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)',
+              background: acc, color: dk ? '#080e1a' : '#ffffff', fontSize: 11, fontWeight: 900,
+              padding: '4px 14px', borderRadius: 50, letterSpacing: '0.1em', boxShadow: `0 4px 12px ${acc}40`
             }}>
-              APPROVED TEXTILE PRICING
+              MOST POPULAR
             </div>
 
             <div>
-              <div className="pv-mono-tag" style={{ fontSize: 10.5, fontWeight: 800, color: acc, marginBottom: 8 }}>
-                TIER 04 · SPECIALIZED TEXTILE SUITE
+              <div className="pv-mono-tag" style={{ fontSize: 11, fontWeight: 800, color: acc, marginBottom: 8 }}>
+                TIER 02 · COMPLETE MANUFACTURING
               </div>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
-                Textile Industry ERP
+                Growth Enterprise
               </h3>
-              <p style={{ fontSize: 13, color: fg2, lineHeight: 1.5, margin: '0 0 18px', minHeight: 40 }}>
-                Specialized ERP suite for composite mills, weaving units, dyeing/printing, and garment exporters.
+              <p style={{ fontSize: 13.5, color: fg2, lineHeight: 1.5, margin: '0 0 20px', minHeight: 40 }}>
+                For multi-mill processing units, garment manufacturers, and high-volume yarn traders.
               </p>
 
-              {/* Price Block */}
-              <div style={{ marginBottom: 20, borderBottom: `1px solid ${bdr}`, paddingBottom: 18, minHeight: 88 }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                  <span style={{ fontSize: 36, fontWeight: 900, color: acc, letterSpacing: '-0.03em' }}>
-                    {billingCycle === 'annual' ? '₹99,999' : '₹15,000'}
-                  </span>
-                  <span style={{ fontSize: 13, color: fg2 }}>{billingCycle === 'annual' ? '/ year' : '/ month'}</span>
-                </div>
-                <div style={{ fontSize: 11.5, color: acc, marginTop: 4, fontWeight: 600 }}>
-                  {billingCycle === 'annual'
-                    ? 'Subject to defined user limits · ₹2,000/mo per extra user'
-                    : 'For min 5 users · ₹2,000/mo per additional user'}
-                </div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 24, borderBottom: `1px solid ${bdr}`, paddingBottom: 20 }}>
+                <span style={{ fontSize: 38, fontWeight: 900, color: acc, letterSpacing: '-0.03em' }}>
+                  {billingCycle === 'annual' ? '₹5,999' : '₹6,999'}
+                </span>
+                <span style={{ fontSize: 13, color: fg2 }}>/ month</span>
               </div>
 
-              {/* Setup Charge & Capacity Badge */}
-              <div style={{ fontSize: 11.5, color: fg2, marginBottom: 20 }}>
-                <span style={{ color: fg, fontWeight: 600 }}>One-Time Onboarding:</span> ₹1,00,000 install + ₹50,000 e-way setup
-              </div>
-
-              {/* Concise Feature List */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 11, marginBottom: 28 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 30 }}>
                 {[
-                  'Minimum 5 Users Included (+₹2,000/mo per extra user)',
-                  'Grey Fabric Inward, Loom Issue & Finish Receipt',
-                  'Multi-Level BOM & Dyeing/Printing Jobwork',
-                  'Challan Tracking, Bale/Lot & Piece-Rate Wages',
-                  'Dedicated High-Speed Direct NIC E-Way API Gateway',
-                  'On-Site Textile Implementation & 24/7 Mill SLA'
+                  'Up to 15 Concurrent Users',
+                  'Everything in Starter Suite',
+                  'Multi-Level BOM & Dyeing Jobwork Tracking',
+                  'AI Automated Bank Reconciliation (BRS)',
+                  'Dynamic WhatsApp UPI Collection Recovery',
+                  'AG Grid Live Report Filtering & Custom Views',
+                  '24/7 Priority WhatsApp & Dedicated Desk Support'
                 ].map((feat, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, fontSize: 12.5, color: fg }}>
-                    <CheckCircle2 size={15} color={acc} style={{ flexShrink: 0, marginTop: 2 }} />
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: fg, fontWeight: 500 }}>
+                    <CheckCircle2 size={16} color={acc} style={{ flexShrink: 0, marginTop: 1 }} />
                     <span>{feat}</span>
                   </div>
                 ))}
@@ -554,185 +322,112 @@ export const PricingView: React.FC<PricingViewProps> = ({
             </div>
 
             <a
-              href="https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20book%20a%20demo%20for%20the%20Textile%20Industry%20ERP%20edition."
+              href="https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20book%20an%20Enterprise%20Demo%20for%20the%20Growth%20Enterprise%20Plan."
               target="_blank"
               rel="noopener noreferrer"
               className="pv-pill-btn"
-              style={{ width: '100%', padding: '13px', background: acc, color: dk ? '#080e1a' : '#ffffff', border: 'none', boxShadow: `0 4px 18px ${acc}45`, textDecoration: 'none' }}
+              style={{ width: '100%', padding: '14px', background: acc, color: dk ? '#080e1a' : '#ffffff', border: 'none', boxShadow: `0 4px 18px ${acc}45`, textDecoration: 'none' }}
             >
-              <span>Book Textile ERP Demo</span>
-              <ArrowRight size={15} />
+              <span>Book an Enterprise Demo</span>
+              <ArrowRight size={16} />
+            </a>
+          </div>
+
+          {/* Tier 3: Conglomerate */}
+          <div className="pv-price-card">
+            <div>
+              <div className="pv-mono-tag" style={{ fontSize: 11, fontWeight: 800, color: '#38bdf8', marginBottom: 8 }}>
+                TIER 03 · MULTI-COMPANY GROUP
+              </div>
+              <h3 style={{ fontSize: 24, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
+                Conglomerate Suite
+              </h3>
+              <p style={{ fontSize: 13.5, color: fg2, lineHeight: 1.5, margin: '0 0 20px', minHeight: 40 }}>
+                For multi-entity holding groups, composite textile mills, and large trading houses.
+              </p>
+
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 24, borderBottom: `1px solid ${bdr}`, paddingBottom: 20 }}>
+                <span style={{ fontSize: 38, fontWeight: 900, color: fg, letterSpacing: '-0.03em' }}>
+                  {billingCycle === 'annual' ? '₹14,999' : '₹17,999'}
+                </span>
+                <span style={{ fontSize: 13, color: fg2 }}>/ month</span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 30 }}>
+                {[
+                  'Unlimited Multi-Branch & Multi-Unit Users',
+                  'Everything in Growth Enterprise',
+                  'Multi-Company Group Financial Consolidation',
+                  'MCA-Compliant Immutable Audit Trail & Diffs',
+                  'Custom Letterhead Print & Voucher Designer',
+                  'Custom ERP Database Extension Schemas',
+                  'Dedicated Solution Architect & On-Site Handholding'
+                ].map((feat, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: fg }}>
+                    <CheckCircle2 size={16} color="#38bdf8" style={{ flexShrink: 0, marginTop: 1 }} />
+                    <span>{feat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <a
+              href="https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20details%20about%20the%20Conglomerate%20Suite%20multi-company%20plan."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pv-pill-btn"
+              style={{ width: '100%', padding: '13px', background: 'transparent', color: fg, border: `1px solid ${bdr}`, textDecoration: 'none' }}
+            >
+              Contact Enterprise Sales
             </a>
           </div>
         </div>
 
-        {/* ══════════════════════════════════════════════════════════════════
-            Compact Capability Comparison Table (Dark Navy Premium Theme)
-        ══════════════════════════════════════════════════════════════════ */}
+        {/* Feature Comparison Table */}
         <div style={{
           background: bg2, border: `1px solid ${bdr}`, borderRadius: 20,
-          padding: 'clamp(24px, 4vw, 44px)', overflowX: 'auto', marginBottom: 60,
-          boxShadow: dk ? '0 20px 50px rgba(0,0,0,0.4)' : '0 10px 30px rgba(0,0,0,0.03)'
+          padding: 'clamp(24px, 4vw, 44px)', overflowX: 'auto', marginBottom: 60
         }}>
-          <div style={{ textAlign: 'center', marginBottom: 28 }}>
-            <h2 className="pv-serif-title" style={{ fontSize: 26, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
-              Comprehensive Capability Matrix
-            </h2>
-            <p style={{ fontSize: 13.5, color: fg2, maxWidth: 760, margin: '0 auto' }}>
-              Detailed breakdown of user capacities, statutory automation, and support scopes across all four tiers.
-            </p>
-          </div>
+          <h2 className="pv-serif-title" style={{ fontSize: 24, fontWeight: 800, color: fg, marginBottom: 20, textAlign: 'center' }}>
+            Comprehensive Capability Matrix
+          </h2>
 
-          <table className="pv-matrix-table">
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ borderBottom: `2px solid ${bdr}`, textAlign: 'left' }}>
-                <th style={{ color: fg2, minWidth: 230 }}>Platform Dimension</th>
-                <th style={{ color: fg, textAlign: 'center', minWidth: 140 }}>Starter ERP</th>
-                <th style={{ color: '#38bdf8', textAlign: 'center', minWidth: 150 }}>Business ERP</th>
-                <th style={{ color: '#818cf8', textAlign: 'center', minWidth: 160 }}>Business Pro ERP</th>
-                <th style={{ color: acc, textAlign: 'center', minWidth: 170 }}>Textile Industry ERP</th>
+                <th style={{ padding: '14px 16px', color: fg2 }}>Enterprise Superpower</th>
+                <th style={{ padding: '14px 16px', color: fg, textAlign: 'center' }}>Starter Suite</th>
+                <th style={{ padding: '14px 16px', color: acc, textAlign: 'center' }}>Growth Enterprise</th>
+                <th style={{ padding: '14px 16px', color: '#38bdf8', textAlign: 'center' }}>Conglomerate Suite</th>
               </tr>
             </thead>
             <tbody>
-              {/* Category: Subscription & Onboarding */}
-              <tr>
-                <td colSpan={5} className="pv-matrix-category" style={{ color: acc }}>
-                  Subscription & Onboarding Charges
-                </td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Subscription Price</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>{billingCycle === 'annual' ? '₹5,999 / yr' : (starterUserMode === 'single' ? '₹500 / mo' : '₹799 / mo')}</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8', fontWeight: 600 }}>Quotation-Based</td>
-                <td style={{ textAlign: 'center', color: '#818cf8', fontWeight: 600 }}>Quotation-Based</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>{billingCycle === 'annual' ? '₹99,999 / yr' : '₹15,000 / mo'}</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>One-Time Installation Fee</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>₹5,000</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Quotation-Based</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Quotation-Based</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>₹1,00,000</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Dedicated E-Way Bill Setup</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Optional Add-On</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Included in Quote</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Included in Quote</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>₹50,000 (Dedicated API)</td>
-              </tr>
-
-              {/* Category: Capacity & Platform Access */}
-              <tr>
-                <td colSpan={5} className="pv-matrix-category" style={{ color: '#38bdf8' }}>
-                  Capacity & Access Architecture
-                </td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Number of Users</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>1, 2, or Up to 5 (Annual)</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Scalable on Quote</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Enterprise Team</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Min 5 (+₹2,000/mo/user)</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Number of Companies</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>1 Company</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Up to 3 Companies</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Multi-Company Group</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Mill Group & Concerns</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Number of Branches / Locations</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>1 Single Location</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Up to 3 Counters</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Multi-Branch Central Sync</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Multi-Mill & Godowns</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Desktop, Web & Mobile Access</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Desktop + Web Browser</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Desktop + Web + Mobile Web</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Desktop + Web + Mobile PWA</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Desktop + Web + Scanner</td>
-              </tr>
-
-              {/* Category: Reporting & Document Customization */}
-              <tr>
-                <td colSpan={5} className="pv-matrix-category" style={{ color: '#818cf8' }}>
-                  Reporting & Document Customization
-                </td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Standard vs Customised Reports</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Standard Ledgers & GST</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Standard + Letterhead Custom</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Drag-and-Drop Visual Designer</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Full Textile + Visual Designer</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Report Watermark Status</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>CorpVEX Watermark on prints</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8', fontWeight: 600 }}>100% Watermark-Free</td>
-                <td style={{ textAlign: 'center', color: '#818cf8', fontWeight: 600 }}>100% Watermark-Free</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>100% Watermark-Free</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Scheduled Reporting</td>
-                <td style={{ textAlign: 'center', color: fg2 }}><X size={15} color={fg2} style={{ opacity: 0.3 }} /></td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Weekly / Monthly Digests</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Daily Executive Briefing</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Shift Digests & Loom Logs</td>
-              </tr>
-
-              {/* Category: Integrations & Compliance */}
-              <tr>
-                <td colSpan={5} className="pv-matrix-category" style={{ color: '#10b981' }}>
-                  Integrations, Backups & Support
-                </td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Email Integration</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Manual PDF Export</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Automated Statement Dispatch</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Automated SMTP Dispatch</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Batch Mill Dispatch & Statements</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>WhatsApp Integration</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Manual Share</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Automated PDF Invoices</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>WhatsApp Business API</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Automated Dispatch + Payment Links</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Telegram Bot Integration</td>
-                <td style={{ textAlign: 'center', color: fg2 }}><X size={15} color={fg2} style={{ opacity: 0.3 }} /></td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Optional Add-On</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Management Alert Bots</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Floor, Loom & Jobwork Alerts</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>E-Way Bill & E-Invoice Integration</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Portal CSV / JSON Export</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>1-Click Direct GST API</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>High-Throughput Direct API</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Dedicated Direct NIC Gateway</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Automatic Backups</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Daily Local Backup</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Automated Daily Cloud Backup</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Continuous Cloud Replication</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>Air-Gapped Multi-Location Replication</td>
-              </tr>
-              <tr style={{ borderBottom: `1px solid ${bdr}` }}>
-                <td style={{ fontWeight: 600, color: fg }}>Implementation & Support</td>
-                <td style={{ textAlign: 'center', color: fg2 }}>Remote Setup · Email Support</td>
-                <td style={{ textAlign: 'center', color: '#38bdf8' }}>Guided Onboarding · Priority Desk</td>
-                <td style={{ textAlign: 'center', color: '#818cf8' }}>Architect Cut-over · Fast SLA</td>
-                <td style={{ textAlign: 'center', color: acc, fontWeight: 700 }}>On-Site Mill Setup · 24/7 SLA</td>
-              </tr>
+              {[
+                { name: 'Double-Entry Accounting & Ledgers', t1: true, t2: true, t3: true },
+                { name: 'Multi-Godown Inventory & Stock Valuation', t1: true, t2: true, t3: true },
+                { name: '1-Click GST e-Invoice & e-Way Bill Direct API', t1: true, t2: true, t3: true },
+                { name: 'Multi-Level BOM & Dyeing Jobwork', t1: false, t2: true, t3: true },
+                { name: 'AI Automated Bank Reconciliation (BRS)', t1: false, t2: true, t3: true },
+                { name: 'WhatsApp Statement Dispatch & UPI Link Recovery', t1: 'Basic', t2: 'Automated', t3: 'Unlimited 24/7' },
+                { name: 'AG Grid Multi-Column Reporting Studio', t1: false, t2: true, t3: true },
+                { name: 'Multi-Company Group Consolidation', t1: false, t2: false, t3: true },
+                { name: 'MCA Cryptographic Immutable Audit Trail', t1: false, t2: false, t3: true },
+                { name: 'Custom ERP Field Schema Configurator', t1: false, t2: true, t3: true },
+                { name: 'Dedicated Solution Architect & SLAs', t1: false, t2: 'WhatsApp Desk', t3: 'Dedicated Architect' }
+              ].map((row, idx) => (
+                <tr key={idx} style={{ borderBottom: `1px solid ${bdr}` }}>
+                  <td style={{ padding: '13px 16px', fontWeight: 600, color: fg }}>{row.name}</td>
+                  <td style={{ padding: '13px 16px', textAlign: 'center' }}>
+                    {typeof row.t1 === 'boolean' ? (row.t1 ? <Check size={16} color="#10b981" /> : <X size={16} color={fg2} style={{ opacity: 0.4 }} />) : <span style={{ color: fg2, fontWeight: 600 }}>{row.t1}</span>}
+                  </td>
+                  <td style={{ padding: '13px 16px', textAlign: 'center', background: dk ? 'rgba(232, 168, 56, 0.04)' : 'rgba(217, 119, 6, 0.03)' }}>
+                    {typeof row.t2 === 'boolean' ? (row.t2 ? <Check size={16} color={acc} /> : <X size={16} color={fg2} style={{ opacity: 0.4 }} />) : <span style={{ color: acc, fontWeight: 700 }}>{row.t2}</span>}
+                  </td>
+                  <td style={{ padding: '13px 16px', textAlign: 'center' }}>
+                    {typeof row.t3 === 'boolean' ? (row.t3 ? <Check size={16} color="#38bdf8" /> : <X size={16} color={fg2} style={{ opacity: 0.4 }} />) : <span style={{ color: '#38bdf8', fontWeight: 700 }}>{row.t3}</span>}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
