@@ -1537,7 +1537,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           }}
         >
           <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px #10b981' }} />
-          <span>✨ <strong>CORPVEX 2.0 LIVE</strong>: Autonomous MCA Audit Trail & AI Bank Statement Parser</span>
+          <span>✨ <strong>CorpVEX 2.0 LIVE</strong>: Autonomous MCA Audit Trail & AI Bank Statement Parser</span>
           <ChevronRight size={14} />
         </div>
 
@@ -2797,7 +2797,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
-                      CORPVEX Dispatch Bot
+                      CorpVEX Dispatch Bot
                       <span style={{ fontSize: 10, background: '#25d366', color: '#000', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>VERIFIED</span>
                     </div>
                     <div style={{ fontSize: 11, opacity: 0.85 }}>Official Enterprise Billing Channel</div>
@@ -3183,7 +3183,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             }}>
               <div style={{ color: fg2 }}>Capability / Workflow</div>
               <div style={{ color: '#ef4444' }}>🐢 Legacy Desktop (Tally / Busy)</div>
-              <div style={{ color: acc }}>⚡ CORPVEX Cloud ERP</div>
+              <div style={{ color: acc }}>⚡ CorpVEX Cloud ERP</div>
             </div>
 
             {/* Rows */}
@@ -3406,12 +3406,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <Building2 size={18} color={acc} />
-              <span style={{ fontSize: 15, fontWeight: 900, color: fg }}>CORPVEX <span style={{ color: acc }}>ERP</span></span>
+              <span style={{ fontSize: 15, fontWeight: 900, color: fg }}>CorpVEX <span style={{ color: acc }}>ERP</span></span>
             </div>
             <p style={{ lineHeight: 1.6, marginBottom: 12 }}>
               Next-generation autonomous ERP and financial intelligence suite built for modern Indian enterprises.
             </p>
-            <div style={{ fontSize: 11.5 }}>© 2026 Corpvex Cloud Technologies Pvt Ltd.</div>
+            <div style={{ fontSize: 11.5 }}>© 2026 CorpVEX Cloud Technologies Pvt Ltd.</div>
           </div>
 
           <div>
@@ -3445,7 +3445,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           <div>
             <div style={{ fontSize: 13, fontWeight: 800, color: fg, marginBottom: 12 }}>Enterprise Contact</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <span>support@corpvex.com</span>
+              <a href="mailto:corpverp@gmail.com" style={{ color: fg, textDecoration: 'none' }}>corpverp@gmail.com</a>
               <a href="tel:+918858141463" style={{ color: fg, fontWeight: 700, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
                 <Phone size={14} color={acc} />
                 <span>+918858141463</span>
@@ -4337,11 +4337,11 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                 {/* Company & Document Header Grid */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 16, borderBottom: '1px solid #cbd5e1', paddingBottom: 12, marginBottom: 12 }}>
                   <div>
-                    <div style={{ fontSize: 16, fontWeight: 900, color: '#0f172a' }}>CORPVEX ENTERPRISES INDIA PVT LTD</div>
+                    <div style={{ fontSize: 16, fontWeight: 900, color: '#0f172a' }}>CorpVEX Enterprises India Pvt Ltd</div>
                     <div style={{ fontSize: 11, color: '#334155', lineHeight: 1.4, marginTop: 4 }}>
                       Plot 42-45, Ring Road Industrial Estate, Surat, Gujarat - 395002<br />
                       <strong>GSTIN:</strong> 24AAACC1234F1Z8 | <strong>State Code:</strong> 24 (Gujarat)<br />
-                      <strong>Email:</strong> accounts@corpvex.com | <strong>Phone:</strong> +918858141463
+                      <strong>Email:</strong> corpverp@gmail.com | <strong>Phone:</strong> +918858141463
                     </div>
                   </div>
                   <div style={{ background: '#f8fafc', padding: 10, borderRadius: 6, border: '1px solid #e2e8f0', fontSize: 11.5 }}>
@@ -4461,7 +4461,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                   </div>
 
                   <div style={{ textAlign: 'center', borderTop: '1px solid #0f172a', paddingTop: 8 }}>
-                    <div style={{ fontSize: 11, fontWeight: 800 }}>For CORPVEX ENTERPRISES INDIA PVT LTD</div>
+                    <div style={{ fontSize: 11, fontWeight: 800 }}>For CorpVEX Enterprises India Pvt Ltd</div>
                     <div style={{ height: 35, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0284c7', fontStyle: 'italic', fontSize: 12 }}>
                       [ Digitally Signed by Authorized Signatory ]
                     </div>

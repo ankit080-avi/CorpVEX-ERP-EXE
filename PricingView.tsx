@@ -648,11 +648,12 @@ export const PricingView: React.FC<PricingViewProps> = ({
         <div style={{ maxWidth: 1680, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Building2 size={16} color={acc} />
-            <span style={{ fontSize: 14, fontWeight: 900, color: fg }}>CORPVEX <span style={{ color: acc }}>ERP</span></span>
-            <span style={{ fontSize: 12, marginLeft: 12 }}>© 2026 Corpvex Cloud Technologies Pvt Ltd.</span>
+            <span style={{ fontSize: 14, fontWeight: 900, color: fg }}>CorpVEX <span style={{ color: acc }}>ERP</span></span>
+            <span style={{ fontSize: 12, marginLeft: 12 }}>© 2026 CorpVEX Cloud Technologies Pvt Ltd.</span>
           </div>
-          <div style={{ display: 'flex', gap: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             <span onClick={onNavigateHome} style={{ cursor: 'pointer' }}>Back to Home</span>
+            <a href="mailto:corpverp@gmail.com" style={{ cursor: 'pointer', color: fg2, textDecoration: 'none' }}>corpverp@gmail.com</a>
             <a href="https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20book%20a%20demo." target="_blank" rel="noopener noreferrer" style={{ cursor: 'pointer', color: acc, fontWeight: 700, textDecoration: 'none' }}>Book a Demo</a>
           </div>
         </div>

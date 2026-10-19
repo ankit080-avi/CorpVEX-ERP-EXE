@@ -94,7 +94,7 @@ export const LandingTopbar: React.FC<LandingTopbarProps> = ({
             lineHeight: 1.1,
             color: fg
           }}>
-            CORPVEX <span style={{ color: acc }}>ERP</span>
+            CorpVEX <span style={{ color: acc }}>ERP</span>
           </div>
           <div style={{
             fontSize: 9.5,
