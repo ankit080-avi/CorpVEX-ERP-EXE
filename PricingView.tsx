@@ -34,6 +34,7 @@ export const PricingView: React.FC<PricingViewProps> = ({
 
   const [billingCycle, setBillingCycle] = useState<'annual' | 'monthly'>('annual');
   const [starterUserMode, setStarterUserMode] = useState<'single' | 'dual'>('single');
+  const [businessMode, setBusinessMode] = useState<'standard' | 'pro'>('standard');
   const [mouseCoords, setMouseCoords] = useState({ x: -1000, y: -1000 });
 
   const dk = theme === 'dark';
@@ -233,8 +234,8 @@ export const PricingView: React.FC<PricingViewProps> = ({
           </div>
         </div>
 
-        {/* 4 Pricing Tier Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, marginBottom: 70 }}>
+        {/* 3 Pricing Tier Cards (Starter, Business w/ Pro Toggle, Textile Industry) */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 28, marginBottom: 70 }}>
           {/* Plan 1: Starter ERP */}
           <div className="pv-price-card">
             <div>
@@ -324,43 +325,121 @@ export const PricingView: React.FC<PricingViewProps> = ({
             </a>
           </div>
 
-          {/* Plan 2: Business ERP */}
+          {/* Plan 2: Business ERP (with inline Pro toggle) */}
           <div className="pv-price-card">
             <div>
-              <div className="pv-mono-tag" style={{ fontSize: 11, fontWeight: 800, color: '#38bdf8', marginBottom: 8 }}>
-                TIER 02 · WHOLESALE & DISTRIBUTION
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, flexWrap: 'wrap', gap: 8 }}>
+                <div className="pv-mono-tag" style={{ fontSize: 11, fontWeight: 800, color: businessMode === 'pro' ? '#818cf8' : '#38bdf8' }}>
+                  {businessMode === 'pro' ? 'TIER 02 · ADVANCED OPERATIONS (PRO)' : 'TIER 02 · WHOLESALE & DISTRIBUTION'}
+                </div>
+                {/* Pro Switcher Toggle Pill */}
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  background: dk ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)',
+                  padding: '2px',
+                  borderRadius: 20,
+                  border: `1px solid ${bdr}`,
+                  gap: 2
+                }}>
+                  <button
+                    type="button"
+                    onClick={() => setBusinessMode('standard')}
+                    style={{
+                      padding: '4px 10px',
+                      borderRadius: 16,
+                      border: 'none',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      background: businessMode === 'standard' ? '#38bdf8' : 'transparent',
+                      color: businessMode === 'standard' ? (dk ? '#080e1a' : '#ffffff') : fg2,
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    Business
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBusinessMode('pro')}
+                    style={{
+                      padding: '4px 10px',
+                      borderRadius: 16,
+                      border: 'none',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      background: businessMode === 'pro' ? '#818cf8' : 'transparent',
+                      color: businessMode === 'pro' ? '#ffffff' : fg2,
+                      transition: 'all 0.2s ease',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4
+                    }}
+                  >
+                    <span>Pro</span>
+                    <span style={{
+                      fontSize: 8.5,
+                      fontWeight: 800,
+                      padding: '1px 4px',
+                      borderRadius: 4,
+                      background: businessMode === 'pro' ? 'rgba(255,255,255,0.25)' : (dk ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.15)'),
+                      color: businessMode === 'pro' ? '#ffffff' : '#818cf8'
+                    }}>
+                      ADVANCED
+                    </span>
+                  </button>
+                </div>
               </div>
+
               <h3 style={{ fontSize: 24, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
-                Business ERP
+                {businessMode === 'pro' ? 'Business Pro ERP' : 'Business ERP'}
               </h3>
               <p style={{ fontSize: 13.5, color: fg2, lineHeight: 1.5, margin: '0 0 20px', minHeight: 40 }}>
-                For expanding wholesale distributors, trading firms, and multi-counter sales operations.
+                {businessMode === 'pro'
+                  ? 'For multi-branch textile groups requiring centralized consolidation and real-time sync.'
+                  : 'For expanding wholesale distributors, trading firms, and multi-counter sales operations.'}
               </p>
 
               <div style={{ marginBottom: 24, borderBottom: `1px solid ${bdr}`, paddingBottom: 20 }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                  <span style={{ fontSize: 32, fontWeight: 900, color: '#38bdf8', letterSpacing: '-0.02em' }}>
+                  <span style={{ fontSize: 32, fontWeight: 900, color: businessMode === 'pro' ? '#818cf8' : '#38bdf8', letterSpacing: '-0.02em' }}>
                     Custom Quote
                   </span>
                 </div>
                 <div style={{ fontSize: 11.5, color: fg2, marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <Clock size={12} color="#38bdf8" />
-                  <span>Quotation-Based · Pricing Under Review</span>
+                  <Clock size={12} color={businessMode === 'pro' ? '#818cf8' : '#38bdf8'} />
+                  <span>
+                    {businessMode === 'pro'
+                      ? 'Quotation-Based · Enterprise Licensing'
+                      : 'Quotation-Based · Pricing Under Review'}
+                  </span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 30 }}>
-                {[
-                  'Scalable User Packages on Quotation',
-                  'Up to 3 Companies · Multi-Counter Sales',
-                  '1-Click Direct GST e-Invoice & e-Way Bill API',
-                  'Automated WhatsApp PDF Statement Dispatch',
-                  '100% Watermark-Free Document Printing',
-                  'Automated Daily Encrypted Cloud Backup',
-                  'Master Data Migration & Priority Desk'
-                ].map((feat, i) => (
+                {(businessMode === 'pro'
+                  ? [
+                      'Enterprise Multi-User Team Licensing',
+                      'Multi-Company Group · Multi-Branch Sync',
+                      'Drag-and-Drop Visual Report Designer',
+                      'MCA-Compliant Immutable Audit Trail & Diffs',
+                      'Telegram & WhatsApp Operational Alerts',
+                      'Continuous Multi-Cloud Database Replication',
+                      'Dedicated Solution Architect & Fast SLA'
+                    ]
+                  : [
+                      'Scalable User Packages on Quotation',
+                      'Up to 3 Companies · Multi-Counter Sales',
+                      '1-Click Direct GST e-Invoice & e-Way Bill API',
+                      'Automated WhatsApp PDF Statement Dispatch',
+                      '100% Watermark-Free Document Printing',
+                      'Automated Daily Encrypted Cloud Backup',
+                      'Master Data Migration & Priority Desk'
+                    ]
+                ).map((feat, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: fg }}>
-                    <CheckCircle2 size={16} color="#38bdf8" style={{ flexShrink: 0, marginTop: 1 }} />
+                    <CheckCircle2 size={16} color={businessMode === 'pro' ? '#818cf8' : '#38bdf8'} style={{ flexShrink: 0, marginTop: 1 }} />
                     <span>{feat}</span>
                   </div>
                 ))}
@@ -368,73 +447,28 @@ export const PricingView: React.FC<PricingViewProps> = ({
             </div>
 
             <a
-              href="https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20request%20a%20quotation%20for%20the%20Business%20ERP%20plan."
+              href={businessMode === 'pro'
+                ? "https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20request%20a%20quotation%20for%20the%20Business%20Pro%20ERP%20plan."
+                : "https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20request%20a%20quotation%20for%20the%20Business%20ERP%20plan."
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="pv-pill-btn"
-              style={{ width: '100%', padding: '13px', background: 'transparent', color: fg, border: `1px solid ${bdr}`, textDecoration: 'none' }}
+              style={{
+                width: '100%',
+                padding: '13px',
+                background: 'transparent',
+                color: fg,
+                border: `1px solid ${businessMode === 'pro' ? 'rgba(129, 140, 248, 0.4)' : 'rgba(56, 189, 248, 0.4)'}`,
+                textDecoration: 'none'
+              }}
             >
-              <span>Request Business Quote</span>
-              <ArrowRight size={15} />
+              <span>{businessMode === 'pro' ? 'Request Business Pro Quote' : 'Request Business Quote'}</span>
+              <ArrowRight size={15} color={businessMode === 'pro' ? '#818cf8' : '#38bdf8'} />
             </a>
           </div>
 
-          {/* Plan 3: Business Pro ERP */}
-          <div className="pv-price-card">
-            <div>
-              <div className="pv-mono-tag" style={{ fontSize: 11, fontWeight: 800, color: '#818cf8', marginBottom: 8 }}>
-                TIER 03 · ADVANCED OPERATIONS
-              </div>
-              <h3 style={{ fontSize: 24, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
-                Business Pro ERP
-              </h3>
-              <p style={{ fontSize: 13.5, color: fg2, lineHeight: 1.5, margin: '0 0 20px', minHeight: 40 }}>
-                For multi-branch textile groups requiring centralized consolidation and real-time sync.
-              </p>
-
-              <div style={{ marginBottom: 24, borderBottom: `1px solid ${bdr}`, paddingBottom: 20 }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                  <span style={{ fontSize: 32, fontWeight: 900, color: '#818cf8', letterSpacing: '-0.02em' }}>
-                    Custom Quote
-                  </span>
-                </div>
-                <div style={{ fontSize: 11.5, color: fg2, marginTop: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <Clock size={12} color="#818cf8" />
-                  <span>Quotation-Based · Enterprise Licensing</span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 30 }}>
-                {[
-                  'Enterprise Multi-User Team Licensing',
-                  'Multi-Company Group · Multi-Branch Sync',
-                  'Drag-and-Drop Visual Report Designer',
-                  'MCA-Compliant Immutable Audit Trail & Diffs',
-                  'Telegram & WhatsApp Operational Alerts',
-                  'Continuous Multi-Cloud Database Replication',
-                  'Dedicated Solution Architect & Fast SLA'
-                ].map((feat, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: fg }}>
-                    <CheckCircle2 size={16} color="#818cf8" style={{ flexShrink: 0, marginTop: 1 }} />
-                    <span>{feat}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <a
-              href="https://wa.me/918858141463?text=Hello%20CorpVEX%20Team%2C%20I%20want%20to%20request%20a%20quotation%20for%20the%20Business%20Pro%20ERP%20plan."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pv-pill-btn"
-              style={{ width: '100%', padding: '13px', background: 'transparent', color: fg, border: `1px solid ${bdr}`, textDecoration: 'none' }}
-            >
-              <span>Request Business Pro Quote</span>
-              <ArrowRight size={15} />
-            </a>
-          </div>
-
-          {/* Plan 4: Textile Industry ERP (Popular) */}
+          {/* Plan 3: Textile Industry ERP (Popular) */}
           <div className="pv-price-card popular">
             <div style={{
               position: 'absolute', top: -13, left: '50%', transform: 'translateX(-50%)',
@@ -447,7 +481,7 @@ export const PricingView: React.FC<PricingViewProps> = ({
 
             <div>
               <div className="pv-mono-tag" style={{ fontSize: 11, fontWeight: 800, color: acc, marginBottom: 8 }}>
-                TIER 04 · SPECIALIZED TEXTILE SUITE
+                TIER 03 · SPECIALIZED TEXTILE SUITE
               </div>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: fg, margin: '0 0 8px' }}>
                 Textile Industry ERP
@@ -517,8 +551,24 @@ export const PricingView: React.FC<PricingViewProps> = ({
               <tr style={{ borderBottom: `2px solid ${bdr}`, textAlign: 'left' }}>
                 <th style={{ padding: '14px 16px', color: fg2 }}>Enterprise Superpower</th>
                 <th style={{ padding: '14px 16px', color: fg, textAlign: 'center' }}>Starter ERP</th>
-                <th style={{ padding: '14px 16px', color: '#38bdf8', textAlign: 'center' }}>Business ERP</th>
-                <th style={{ padding: '14px 16px', color: '#818cf8', textAlign: 'center' }}>Business Pro ERP</th>
+                <th style={{
+                  padding: '14px 16px',
+                  color: '#38bdf8',
+                  textAlign: 'center',
+                  background: businessMode === 'standard' ? (dk ? 'rgba(56, 189, 248, 0.08)' : 'rgba(56, 189, 248, 0.06)') : 'transparent',
+                  borderRadius: '8px 8px 0 0'
+                }}>
+                  Business ERP {businessMode === 'standard' && <span style={{ fontSize: 9.5, padding: '2px 6px', background: '#38bdf8', color: '#080e1a', borderRadius: 10, marginLeft: 4, fontWeight: 800 }}>ACTIVE</span>}
+                </th>
+                <th style={{
+                  padding: '14px 16px',
+                  color: '#818cf8',
+                  textAlign: 'center',
+                  background: businessMode === 'pro' ? (dk ? 'rgba(129, 140, 248, 0.08)' : 'rgba(129, 140, 248, 0.06)') : 'transparent',
+                  borderRadius: '8px 8px 0 0'
+                }}>
+                  Business Pro ERP {businessMode === 'pro' && <span style={{ fontSize: 9.5, padding: '2px 6px', background: '#818cf8', color: '#ffffff', borderRadius: 10, marginLeft: 4, fontWeight: 800 }}>ACTIVE</span>}
+                </th>
                 <th style={{ padding: '14px 16px', color: acc, textAlign: 'center' }}>Textile Industry ERP</th>
               </tr>
             </thead>
